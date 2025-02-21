@@ -35,6 +35,7 @@ On Debian based systems.
 Clone this repository and copy the `git-muzak.sh` script to somewhere in your `$PATH`, with your desired name, e.g.:
 
     cp git-muzak.sh /usr/local/bin/git-muzak
+    chmod +x /usr/local/bin/git-muzak
 
 For simplicity, this is exactly what is done for you via `make install`.
 
