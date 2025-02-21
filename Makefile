@@ -10,6 +10,7 @@ test:
 
 install:
 	cp ./git-muzak.sh /usr/local/bin/git-muzak
+	chmod +x /usr/local/bin/git-muzak
 
 uninstall:
 	rm /usr/local/bin/git-muzak
