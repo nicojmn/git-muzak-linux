@@ -68,7 +68,21 @@ prepare_commit_msg() {
     # if a song is playing, amend the prepared commit message
     SONG=$(current_track)
     if [[ $SONG ]]; then
-        echo -e "$(cat "$1")\n\n$SONG" > "$1"
+        # If there are comment lines (starting with '#'), insert the song before them
+        if grep -q "^#" "$1"; then
+            awk -v song="$SONG" '{
+                if (!inserted && /^#/) {
+                    print "";
+                    print "";
+                    print song;
+                    inserted=1;
+                }
+                print;
+            }' "$1" > "$1.tmp" && mv "$1.tmp" "$1"
+        else
+            # Otherwise, just append after two newlines
+            echo -e "$(cat "$1")\n\n$SONG" > "$1"
+        fi
     fi
 }
 
