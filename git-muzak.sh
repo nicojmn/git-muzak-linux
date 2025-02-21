@@ -4,7 +4,7 @@ debug_msg() { [[ $DEBUG = "true" ]] && >&2 echo "DEBUG: $1" ; }
 
 show_help() {
 cat << EOF
-Add the currently playing iTunes track to your git commits.
+Add the currently playing track to your git commits.
 
 Usage:
     ${0##*/} <COMMIT_MSG_FILE> <SRC_TYPE> [<HASH>] # called via hook
@@ -46,38 +46,10 @@ install_hook() {
 ### music related functions ###
 ###############################
 
-# current itunes track, if active and playing
-itunes_track() {
-    osascript -e 'tell application "iTunes" to if it is running and player state is playing then "♬ : " & artist of current track & " / " & name of current track'
-}
-
-# current spotify track, if active and playing
-spotify_track() {
-    osascript -e 'tell application "Spotify" to if it is running and player state is playing then "♬ : " & artist of current track & " / " & name of current track'
-}
-
-# returns bundle identifier string if exists, blank if not
-app_exists() {
-    osascript -e 'try' -e "id of application \"$1\"" -e 'end try'
-}
-
-
+# current track using playerctl, if active and playing
 current_track() {
-    if [[ $(app_exists "iTunes") ]]; then
-        active_track=$(itunes_track)
-        if [[ $active_track ]]; then
-            echo "$active_track"; return
-        fi
-    fi
-
-    if [[ $(app_exists "Spotify") ]]; then
-        active_track=$(spotify_track)
-        if [[ $active_track ]]; then
-            echo "$active_track"; return
-        fi
-    fi
+    playerctl metadata --format '♬ : {{ artist }} / {{ title }}' 2>/dev/null
 }
-
 
 ##########################
 ### main program logic ###
@@ -114,3 +86,4 @@ case $1 in
         exit
         ;;
 esac
+

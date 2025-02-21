@@ -1,7 +1,7 @@
 # git-muzak
 > Background music for your git commits
 
-Inserts the currently playing iTunes or Spotify track in your git commit messages.
+Inserts the currently playing track in your git commit messages.
 
 This is done in the "prepared" message, so you can still edit it in your $EDITOR if you decide the track is too awesome or something.
 
@@ -11,9 +11,26 @@ If you are doing a quick commit message e.g. with `-m`, things will still work:
 
 ![git-music-results-github-app-ss](https://cloud.githubusercontent.com/assets/40650/22171382/a0c1ca4c-df5a-11e6-8b83-835cafaf9602.png)
 
-Requires a macOS environment (for now).
 
 ## Installation
+
+### Prerequisites
+
+You need to have `git` (obviously) and `playerctl` installed. The latter is a command-line utility for controlling media players that implement the MPRIS D-Bus interface specification.
+
+You can install it via your favourite package manager, e.g.:
+
+```
+yay -S playerctl
+```
+On Arch Linux based systems.
+
+```
+sudo apt-get install playerctl
+```
+On Debian based systems.
+
+### Cloning the repository
 
 Clone this repository and copy the `git-muzak.sh` script to somewhere in your `$PATH`, with your desired name, e.g.:
 
